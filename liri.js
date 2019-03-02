@@ -108,23 +108,24 @@ function concertThis(search) {
 
                 var artistData = [
                     "Venue name: " + jsonData[i].venue.name,
-                    "Venue location: " + jsonData[i].venue.city + "," + jsonData[i].venue.region + "," + jsonData[i].venue.country,
+                    "Venue location: " + jsonData[i].venue.city + ", " + jsonData[i].venue.region + ", " + jsonData[i].venue.country,
                     "Date: " + moment(jsonData[i].datetime).format('L'),
                 ].join('\n\n');
+                // this is formatting the words and dates
 
 
                 console.log("=======================");
                 console.log("The name of the venue is: " + jsonData[i].venue.name);
-                console.log("The location of the venue is: " + jsonData[i].venue.city + "," + jsonData[i].venue.region + "," + jsonData[i].venue.country);
+                console.log("The location of the venue is: " + jsonData[i].venue.city + ", " + jsonData[i].venue.region + ", " + jsonData[i].venue.country);
                 console.log("The date of the event is: " + moment(jsonData[i].datetime).format('L'));
                 console.log("=======================");
-            } 
+            }
 
-                fs.appendFile("log.txt", artistData + divider, function (err) {
-                    if (err) throw err;
-                });
-
+            fs.appendFile("log.txt", artistData + divider, function (err) {
+                if (err) throw err;
             });
+
+        });
 
 }
 
@@ -169,9 +170,39 @@ function spotifyThisSong(search) {
 
 
 function doWhatItSays() {
-    var fs = require("fs");
-    fs.appendFile("random.txt", data + divider, function (error) {
-        if (err) throw err;
+
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        var dataArr = data.split(",");
+        console.log(dataArr);
+
+        var info = dataArr[0];
+        var search = dataArr[1];
+
+
+        switch (info) {
+            case "concert-this":
+                concertThis(search);
+                break;
+
+            case "spotify-this-song":
+                spotifyThisSong(search);
+                break;
+
+            case "movie-this":
+                movieThis(search);
+                break;
+
+            default: console.log("Please use a valid command!");
+                return;
+
+        };
+
+
+
+        if (error) {
+            return console.log(error);
+        }
+        console.log(data);
     });
 
 
