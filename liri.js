@@ -19,7 +19,7 @@ var keys = require("./keys.js");
 var fs = require("fs");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-// var moment = require("moment");
+var moment = require("moment");
 var info = process.argv[2];
 var search = process.argv.slice(3).join("+");
 var divider = "\n------------------------------------------------------------\n\n";
@@ -94,20 +94,38 @@ function movieThis(search) {
 }
 
 function concertThis(search) {
-    var artist = search;
     var axios = require("axios");
+    var artist = search;
     var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+
+
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log("=======================");
-            console.log("The name of the venue is: " + response.data.Title);
-            console.log("The location of the venue is: " + response.data.Year);
-            console.log("The date of the event is: " + response.data.imdbRating);
-            console.log("=======================");
+            var jsonData = response.data;
 
-        });
-    // moment.js is happening somewhere here
+            for (var i = 0; i < jsonData.length; i++) {
+
+                var artistData = [
+                    "Venue name: " + jsonData[i].venue.name,
+                    "Venue location: " + jsonData[i].venue.city + "," + jsonData[i].venue.region + "," + jsonData[i].venue.country,
+                    "Date: " + moment(jsonData[i].datetime).format('L'),
+                ].join('\n\n');
+
+
+                console.log("=======================");
+                console.log("The name of the venue is: " + jsonData[i].venue.name);
+                console.log("The location of the venue is: " + jsonData[i].venue.city + "," + jsonData[i].venue.region + "," + jsonData[i].venue.country);
+                console.log("The date of the event is: " + moment(jsonData[i].datetime).format('L'));
+                console.log("=======================");
+            } 
+
+                fs.appendFile("log.txt", artistData + divider, function (err) {
+                    if (err) throw err;
+                });
+
+            });
+
 }
 
 
@@ -146,8 +164,6 @@ function spotifyThisSong(search) {
     });
 
 }
-
-
 
 
 
