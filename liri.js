@@ -21,44 +21,61 @@ var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 // var moment = require("moment");
 var info = process.argv[2];
-var search = "";
+var search = process.argv.slice(3).join("+");
+var divider = "\n------------------------------------------------------------\n\n";
 
 
 switch (info) {
     case "concert-this":
-        concertThis();
+        concertThis(search);
         break;
 
     case "spotify-this-song":
-        spotifyThisSong();
+        spotifyThisSong(search);
         break;
 
     case "movie-this":
-        movieThis();
+        movieThis(search);
         break;
 
     case "do-what-it-says":
-        doWhatItSays();
+        doWhatItSays(search);
         break;
 
-    default: console.log("\n" + "type any command after 'node liri-js': " + "\n" +
-        "concert-this" + "\n" +
-        "spotify-this song 'any song title' " + "\n" +
-        "movie-this 'any movie title' " + "\n" +
-        "do-what-it-says " + "\n" +
-        "Use quotes for multiword titles!");
+    default: console.log("Please use a valid command!");
+        return;
 
 };
 
 
-function movieThis() {
+function movieThis(search) {
     var axios = require("axios");
+    var movie = search;
+    if (!movie) {
+        movie = "Mr. Nobody";
 
-    var queryUrl = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
+    };
+
+    var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&plot=short&apikey=trilogy";
+
+
 
 
     axios.get(queryUrl).then(
         function (response) {
+            var jsonData = response.data;
+
+            var movieData = [
+                "Show: " + jsonData.Title,
+                "Debut Year: " + jsonData.Year,
+                "Rating: " + jsonData.imdbRating,
+                "Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value,
+                "Country: " + jsonData.Country,
+                "Language: " + jsonData.Language,
+                "Plot: " + jsonData.Plot,
+                "Actors: " + jsonData.Actors,
+            ].join('\n\n');
+
             console.log("=======================");
             console.log("The title of the movie is: " + response.data.Title);
             console.log("The year the movie debuted: " + response.data.Year);
@@ -70,14 +87,18 @@ function movieThis() {
             console.log("The actors in the movie are: " + response.data.Actors);
             console.log("=======================");
 
+            fs.appendFile("log.txt", movieData + divider, function (err) {
+                if (err) throw err;
+            });
         });
 }
 
-function concertThis() {
+function concertThis(search) {
+    var artist = search;
     var axios = require("axios");
-    var queryUrl2 = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
-    axios.get(queryUrl2).then(
+    axios.get(queryUrl).then(
         function (response) {
             console.log("=======================");
             console.log("The name of the venue is: " + response.data.Title);
@@ -90,52 +111,52 @@ function concertThis() {
 }
 
 
-function spotifyThisSong() {
+function spotifyThisSong(search) {
+    var song = search;
 
-    if (condition) {
-
-    } else {
-
+    if (!song) {
+        song = "The Sign Ace of Base";
     }
 
-    function (result) {
-        console.log("Artist(s): " + JSON.stringify(result.tracks.artists));
-        console.log("Song Name: " + JSON.stringify(result.tracks.song));
-        console.log("Preview Link: " + JSON.stringify(result.tracks.external_urls));
-        console.log("Album: " + JSON.stringify(results.tracks.name));
+    spotify.search({ type: 'track', query: song }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
 
-        // console.log('this.artist');
-        // console.log('this.song');
-        // console.log('this.previewLink');
-        // console.log('this.album');
-    }
+        data = data.tracks.items[0];
+
+        var songData = [
+            "Artist(s): " + data.artists[0].name,
+            "Song Name: " + data.name,
+            "Preview Link: " + data.external_urls,
+            "Album: " + data.album.name,
+        ].join('\n\n');
+
+
+        console.log("Artist(s): " + JSON.stringify(data.artists[0].name));
+        console.log("Song Name: " + JSON.stringify(data.name));
+        console.log("Preview Link: " + JSON.stringify(data.external_urls));
+        console.log("Album: " + JSON.stringify(data.album.name));
+
+        fs.appendFile("log.txt", songData + divider, function (err) {
+            if (err) throw err;
+        });
+
+
+    });
+
 }
+
+
 
 
 
 
 function doWhatItSays() {
     var fs = require("fs");
-
-    // This block of code will read from the "random.txt" file.
-    // It's important to include the "utf8" parameter or the code will provide stream data (garbage)
-    // The code will store the contents of the reading inside the variable "data"
-    fs.readFile("movies.txt", "utf8", function (error, data) {
-
-        // If the code experiences any errors it will log the error to the console.
-        if (error) {
-            return console.log(error);
-        }
-
-        // We will then print the contents of data
-        console.log(data);
-
-        // Then split it by commas (to make it more readable)
-        var dataArr = data.split(",");
-
-        // We will then re-display the content as an array for later use.
-        console.log(dataArr);
-
+    fs.appendFile("random.txt", data + divider, function (error) {
+        if (err) throw err;
     });
+
 
 }
