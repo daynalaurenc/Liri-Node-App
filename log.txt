@@ -110,3 +110,68 @@ Preview Link: [object Object]
 Album: The Hits--Chapter One
 ------------------------------------------------------------
 
+Artist(s): Kehlani
+
+Song Name: Morning Glory
+
+Preview Link: [object Object]
+
+Album: While We Wait
+------------------------------------------------------------
+
+Venue name: AmericanAirlines Arena
+
+Venue location: Miami, FL, United States
+
+Date: 05/12/2019
+------------------------------------------------------------
+
+Artist(s): Backstreet Boys
+
+Song Name: I Want It That Way
+
+Preview Link: [object Object]
+
+Album: The Hits--Chapter One
+------------------------------------------------------------
+
+Show: The Vow
+
+Debut Year: 2012
+
+Rating: 6.8
+
+Rotten Tomatoes Rating: 31%
+
+Country: USA
+
+Language: English
+
+Plot: A car accident puts Paige in a coma, and when she wakes up with severe memory loss, her husband Leo works to win her heart again.
+
+Actors: Rachel McAdams, Channing Tatum, Jessica Lange, Sam Neill
+------------------------------------------------------------
+
+Venue name: AmericanAirlines Arena
+
+Venue location: Miami, FL, United States
+
+Date: 05/12/2019
+------------------------------------------------------------
+
+Artist(s): Kehlani
+
+Song Name: Nunya (feat. Dom Kennedy)
+
+Preview Link: [object Object]
+
+Album: While We Wait
+------------------------------------------------------------
+
+Venue name: AmericanAirlines Arena
+
+Venue location: Miami, FL, United States
+
+Date: 05/12/2019
+------------------------------------------------------------
+
