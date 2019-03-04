@@ -14,7 +14,7 @@ Typing "movie-this" + title of a movie will render specifics for that movie. [Mo
 
 Typing "do-what-it-says"  will display the song in random.txt file, and then run the 'spotify-this-song' parameters. [Artist name, Song name, Spotify preview link, and Album title] This command uses the Spotify API.
 
-+ BONUS: The data searched in the Terminal is output to a .txt file called log.txt, here all of the commands are appended.
++ The data searched in the Terminal is output to a .txt file called log.txt, here all of the commands are appended.
  
 
 ## Sample View
