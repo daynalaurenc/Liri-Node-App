@@ -19,8 +19,8 @@ Typing "do-what-it-says"  will display the song in random.txt file, and then run
 
 ## Sample View
 
-![Liri-Node-App Screenshot](/assets/images/screenshot1.jpg/)
-![Liri-Node-App Screenshot](/assets/images/screenshot2.jpg/)
+![Liri-Node-App Screenshot](/images/screenshot1.jpg/)
+![Liri-Node-App Screenshot](/images/screenshot2.jpg/)
 
 
 
